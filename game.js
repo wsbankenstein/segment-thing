@@ -1,5 +1,5 @@
 const w = canvas.width, h = canvas.height;
-const DISPLAYS = 10, STDLENGTH = 50, STDTHICKNESS = 10, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
+const DISPLAYS = 11, STDLENGTH = 50, STDTHICKNESS = 10, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
 
 function rotatePoint(pointX, pointY, originX, originY, angle) {
     return {
@@ -137,33 +137,51 @@ class Display {
     }
 }
 
-let displays = [];
+let displayMap = [];
 let DISPLAYSIZE = STDLENGTH * 2 + STDTHICKNESS * 3;
-for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 5; j++) {
-        displays.push(new Display(STDTHICKNESS * 2 + i * (STDLENGTH * 2 + STDTHICKNESS * 4), STDTHICKNESS * (j+2) + DISPLAYSIZE * j));
+for (let i = 0; i < 5; i++) {
+    displayMap[i] = [];
+    for (let j = 0; j < DISPLAYS; j++) {
+        displayMap[i].push(new Display(STDTHICKNESS * 2 + j * (STDLENGTH * 2 + STDTHICKNESS * 4), STDTHICKNESS * (i+2) + DISPLAYSIZE * i));
     }
 }
 
 function update() {
-
+    let date = new Date(Date.now());
+    let s = date.toLocaleTimeString();
+    let t = timeToWords(s);
+    let currentDisplayRow = 0;
+    displayMap.map(ds => ds.map(d => d.segments.map(s => s.set(false)))); // please never do this again
+    textToSegments(t.h, displayMap[currentDisplayRow]);
+    let totalLength = t.h.length + 1 + t.sep.length;
+    textToSegments(t.sep, displayMap[currentDisplayRow].length >= totalLength ? displayMap[currentDisplayRow++].slice(t.h.length + 1) : displayMap[(currentDisplayRow += 2) - 1]); // please never do this again
+    totalLength += 1 + t.m.length;
+    console.log(currentDisplayRow);
+    if (t.m.length <= displayMap[currentDisplayRow].length) textToSegments(t.m, displayMap[currentDisplayRow].length >= totalLength ? displayMap[currentDisplayRow++].slice(t.h.length + 1 + t.sep.length + 1) : displayMap[++currentDisplayRow]);
+    else if (t.m.split(" ").length > 1 && t.m.split(" ")[0].length < displayMap[currentDisplayRow].length) {
+        console.log(currentDisplayRow);
+        textToSegments(t.m.split(" ")[0], displayMap[currentDisplayRow++]);
+        textToSegments(t.m.split(" ").slice(1).join(" "), displayMap[currentDisplayRow++]);
+    }
 }
 
 function draw() {
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, w, h);
 
-    displays.map(d => d.draw());
+    displayMap.map(displays => displays.map(d => d.draw()));
 
     window.requestAnimationFrame(draw);
 }
 
 function mouseDown() {
-    displays.map(d => {
-        d.segments.map(s => {
-            if (isInRotatedRectangle(mouseX, mouseY, s.x, s.y, s.direction, s.length, s.thickness)) {
-                s.toggle();
-            }
+    displayMap.map(displays => {
+        displays.map(d => {
+            d.segments.map(s => {
+                if (isInRotatedRectangle(mouseX, mouseY, s.x, s.y, s.direction, s.length, s.thickness)) {
+                    s.toggle();
+                }
+            });
         });
     });
 }
