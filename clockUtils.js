@@ -1,6 +1,5 @@
-function timeToWords(t) {
-    // let hours = Math.floor(t / 100), minutes = Math.round(t % 100 / 5) * 5; // Military time
-    let hours = parseInt(t.slice(0, 2)), minutes = Math.round(parseInt(t.slice(3, 5)) / 5) * 5;
+function timeToWords(date) {
+    let hours = date.getHours(), minutes = Math.round(date.getMinutes() / 5) * 5;
     let textHours, textMinutes, separator = "И";
     switch (minutes) {
         case 60:
@@ -17,7 +16,6 @@ function timeToWords(t) {
             separator = "БЕЗ";
             case 25:
             textMinutes = "ДВАДЕСЕТ И ПЕТ";
-            // textMinutes = "ДВАЙС-ПЕТ"; // TODO workaround for long minutes string
             break;
         case 40:
             hours++;

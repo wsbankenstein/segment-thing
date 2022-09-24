@@ -148,18 +148,15 @@ for (let i = 0; i < 5; i++) {
 
 function update() {
     let date = new Date(Date.now());
-    let s = date.toLocaleTimeString();
-    let t = timeToWords(s);
+    let t = timeToWords(date);
     let currentDisplayRow = 0;
     displayMap.map(ds => ds.map(d => d.segments.map(s => s.set(false)))); // please never do this again
     textToSegments(t.h, displayMap[currentDisplayRow]);
     let totalLength = t.h.length + 1 + t.sep.length;
     textToSegments(t.sep, displayMap[currentDisplayRow].length >= totalLength ? displayMap[currentDisplayRow++].slice(t.h.length + 1) : displayMap[(currentDisplayRow += 2) - 1]); // please never do this again
     totalLength += 1 + t.m.length;
-    console.log(currentDisplayRow);
     if (t.m.length <= displayMap[currentDisplayRow].length) textToSegments(t.m, displayMap[currentDisplayRow].length >= totalLength ? displayMap[currentDisplayRow++].slice(t.h.length + 1 + t.sep.length + 1) : displayMap[++currentDisplayRow]);
     else if (t.m.split(" ").length > 1 && t.m.split(" ")[0].length < displayMap[currentDisplayRow].length) {
-        console.log(currentDisplayRow);
         textToSegments(t.m.split(" ")[0], displayMap[currentDisplayRow++]);
         textToSegments(t.m.split(" ").slice(1).join(" "), displayMap[currentDisplayRow++]);
     }
