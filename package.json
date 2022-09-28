@@ -1,0 +1,21 @@
+{
+  "name": "segment-thing",
+  "version": "1.0.0",
+  "description": "the thing from https://youtu.be/rKHq4pD4hC0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://codeberg.org/bankenstein/segment-thing"
+  },
+  "author": "Martin Bogdanov",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "express": "^4.18.1",
+    "path": "^0.12.7"
+  }
+}
