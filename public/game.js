@@ -20,6 +20,21 @@ function isInRotatedRectangle(px, py, rx, ry, rd /* rectangle direction */, rl /
     return rx1 < np.x && ry1 < np.y && rx2 > np.x && ry2 > np.y;
 }
 
+let win;
+
+function saveImage() {
+    var link = document.createElement("a");
+    link.download = "wallpaper.png";
+    link.href = canvas.toDataURL();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
+    win = window.open("http://localhost:6969/set", "_blank");
+    win.close();
+}
+
+
 class Segment {
     constructor(x, y, direction, length = STDLENGTH, thickness = STDTHICKNESS, onColour = STDONCOLOUR, offColour = STDOFFCOLOUR) {
         this.x = x;
@@ -186,3 +201,6 @@ function mouseDown() {
 window.requestAnimationFrame(draw);
 
 setInterval(update, 10);
+
+setInterval(saveImage, 60 * 1000);
+setTimeout(saveImage, 1000);
