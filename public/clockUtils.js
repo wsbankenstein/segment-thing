@@ -190,6 +190,7 @@ function letterToSegments(letter, display) {
             for(let i of [7, 1, 8, 11, 3, 14, 10]) s[i].set(true);
             break;
         case " ":
+            case "":
             break;
         case "-":
             for(let i of [2, 3]) s[i].set(true);

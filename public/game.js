@@ -1,5 +1,5 @@
 const w = canvas.width, h = canvas.height;
-const DISPLAYS = 11, STDLENGTH = 50, STDTHICKNESS = 10, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
+const DISPLAYS = 11, STDLENGTH = 45, STDTHICKNESS = 9, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
 
 function rotatePoint(pointX, pointY, originX, originY, angle) {
     return {
@@ -31,9 +31,8 @@ function saveImage() {
     document.body.removeChild(link);
     delete link;
     win = window.open("http://localhost:6969/set", "_blank");
-    win.close();
+    setTimeout(win.close.bind(win), 100);
 }
-
 
 class Segment {
     constructor(x, y, direction, length = STDLENGTH, thickness = STDTHICKNESS, onColour = STDONCOLOUR, offColour = STDOFFCOLOUR) {
@@ -161,20 +160,59 @@ for (let i = 0; i < 5; i++) {
     }
 }
 
+let t = {h: "НАЧАЛНА", sep: "Ш**АНА", m: "СТОЙНОСТ"};
+
 function update() {
     let date = new Date(Date.now());
-    let t = timeToWords(date);
-    let currentDisplayRow = 0;
+    if (timeToWords(date).m == t.m) return;
+    t = timeToWords(date);
     displayMap.map(ds => ds.map(d => d.segments.map(s => s.set(false)))); // please never do this again
-    textToSegments(t.h, displayMap[currentDisplayRow]);
-    let totalLength = t.h.length + 1 + t.sep.length;
-    textToSegments(t.sep, displayMap[currentDisplayRow].length >= totalLength ? displayMap[currentDisplayRow++].slice(t.h.length + 1) : displayMap[(currentDisplayRow += 2) - 1]); // please never do this again
-    totalLength += 1 + t.m.length;
-    if (t.m.length <= displayMap[currentDisplayRow].length) textToSegments(t.m, displayMap[currentDisplayRow].length >= totalLength ? displayMap[currentDisplayRow++].slice(t.h.length + 1 + t.sep.length + 1) : displayMap[++currentDisplayRow]);
-    else if (t.m.split(" ").length > 1 && t.m.split(" ")[0].length < displayMap[currentDisplayRow].length) {
-        textToSegments(t.m.split(" ")[0], displayMap[currentDisplayRow++]);
-        textToSegments(t.m.split(" ").slice(1).join(" "), displayMap[currentDisplayRow++]);
+    if (t.m.split(" ").length > 1) { // ДВАДЕСЕТ И ПЕТ
+        let minutesWords = t.m.split(" ");
+        let hs = t.h + " " + t.sep;
+        if (hs.length <= DISPLAYS) {
+            textToSegments(hs, displayMap[0]);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[1]);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[2]);
+        } else if ((t.sep + " " + minutesWords[0]).length <= DISPLAYS) {
+            textToSegments(t.h, displayMap[0]);
+            textToSegments(t.sep + " " + minutesWords[0], displayMap[1]);
+            textToSegments(minutesWords.slice(1).join(" "), displayMap[2]);
+        } else {
+            textToSegments(t.h, displayMap[0]);
+            textToSegments(t.sep, displayMap[1]);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[2]);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[3]);
+        }
+    } else if (t.sep == "") { // ЧАСА
+        if ((t.h + " " + t.m).length <= DISPLAYS) textToSegments(t.h + " " + t.m, displayMap[0]);
+        else {
+            textToSegments(t.h, displayMap[0]);
+            textToSegments(t.m, displayMap[1]);
+        }
+    } else if (t.string.length <= DISPLAYS) {
+        textToSegments(t.string, displayMap[0]);
+    } else {
+        let hs = t.h + " " + t.sep;
+        let sm = t.sep + " " + t.m;
+        if (hs.length > DISPLAYS && sm.length > DISPLAYS) {
+            textToSegments(t.h, displayMap[0]);
+            textToSegments(t.sep, displayMap[1]);
+            textToSegments(t.m, displayMap[2]);
+        } else if (hs.length > sm.length) {
+            if (hs.length <= DISPLAYS) {
+                textToSegments(hs, displayMap[0]);
+                textToSegments(t.m, displayMap[1]);
+            } else {
+                textToSegments(t.h, displayMap[0]);
+                textToSegments(sm, displayMap[1]);
+            }
+        } else {
+            textToSegments(t.h, displayMap[0]);
+            textToSegments(sm, displayMap[1]);
+        }
     }
+    setTimeout(saveImage, 1000);
 }
 
 function draw() {
@@ -201,6 +239,3 @@ function mouseDown() {
 window.requestAnimationFrame(draw);
 
 setInterval(update, 10);
-
-setInterval(saveImage, 60 * 1000);
-setTimeout(saveImage, 1000);
