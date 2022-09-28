@@ -46,17 +46,17 @@ app.get('/set', (req, res) => {
 
 app.listen(port, () => {                                                                                            
     console.log(`Server running on port ${port}`);
+    exec(browserCmd, (error, stdout, stderr) => {
+        console.log(`command: ${browserCmd}`);
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    });
 });
 
-exec(browserCmd, (error, stdout, stderr) => {
-    console.log(`command: ${browserCmd}`);
-    if (error) {                                                                                                
-        console.log(`error: ${error.message}`);                                                                 
-        return;                                                                                                 
-    }                                                                                                           
-    if (stderr) {                                                                                               
-        console.log(`stderr: ${stderr}`);                                                                       
-        return;                                                                                                 
-    }                                                                                                           
-    console.log(`stdout: ${stdout}`); 
-});
