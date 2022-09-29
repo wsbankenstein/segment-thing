@@ -164,7 +164,7 @@ let t = {h: "НАЧАЛНА", sep: "Ш**АНА", m: "СТОЙНОСТ"};
 
 function update() {
     let date = new Date(Date.now());
-    if (timeToWords(date).m == t.m) return;
+    if (timeToWords(date).h == t.h && timeToWords(date).sep == t.sep && timeToWords(date).m == t.m) return;
     t = timeToWords(date);
     displayMap.map(ds => ds.map(d => d.segments.map(s => s.set(false)))); // please never do this again
     if (t.m.split(" ").length > 1) { // ДВАДЕСЕТ И ПЕТ
