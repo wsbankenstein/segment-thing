@@ -199,17 +199,12 @@ function update() {
             textToSegments(t.h, displayMap[0]);
             textToSegments(t.sep, displayMap[1]);
             textToSegments(t.m, displayMap[2]);
-        } else if (hs.length > sm.length) {
-            if (hs.length <= DISPLAYS) {
-                textToSegments(hs, displayMap[0]);
-                textToSegments(t.m, displayMap[1]);
-            } else {
-                textToSegments(t.h, displayMap[0]);
-                textToSegments(sm, displayMap[1]);
-            }
-        } else {
+        } else if (hs.length > DISPLAYS) {
             textToSegments(t.h, displayMap[0]);
             textToSegments(sm, displayMap[1]);
+        } else {
+            textToSegments(hs, displayMap[0]);
+            textToSegments(t.m, displayMap[1]);
         }
     }
     setTimeout(saveImage, 1000);
