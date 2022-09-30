@@ -138,7 +138,7 @@ function letterToSegments(letter, display) {
             for(let i of [14, 13, 8, 11]) s[i].set(true);
             break;
         case "М":
-            for(let i of [14, 10, 15, 11]) s[i].set(true);
+            for(let i of [7, 8, 9, 11, 12, 13]) s[i].set(true);
             break;
         case "Н":
             for(let i of [6, 9, 2, 3, 8, 11]) s[i].set(true);
@@ -198,8 +198,20 @@ function letterToSegments(letter, display) {
     }
 }
 
-function textToSegments(string, displayArray) {
-    for(let i in string) {
-        letterToSegments(string[i], displayArray[i]);
+function textToSegments(string, displayArray, centered) {
+    if (displayArray.length < string.length) return console.error("String too long for display array");
+    if (centered) {
+        if (string.length == displayArray.length) textToSegments(string, displayArray, false);
+        else {
+            let d = Math.floor((displayArray.length - string.length) / 2);
+            for (let i = Math.floor(string.length / 2); i <= string.length; i++) {
+                letterToSegments(string[i], displayArray[d + i]);
+                letterToSegments(string[string.length - i], displayArray[d + string.length - i]);
+            }
+        }
+    } else {
+        for (let i in string) {
+            letterToSegments(string[i], displayArray[i]);
+        }
     }
 }

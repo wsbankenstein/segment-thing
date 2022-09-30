@@ -1,5 +1,5 @@
 const w = canvas.width, h = canvas.height;
-const DISPLAYS = 11, STDLENGTH = 45, STDTHICKNESS = 9, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
+const DISPLAYS = 10, STDLENGTH = 48.5, STDTHICKNESS = STDLENGTH / 5, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
 
 function rotatePoint(pointX, pointY, originX, originY, angle) {
     return {
@@ -161,6 +161,7 @@ for (let i = 0; i < 5; i++) {
 }
 
 let t = {h: "НАЧАЛНА", sep: "Ш**АНА", m: "СТОЙНОСТ"};
+let centered = true;
 
 function update() {
     let date = new Date(Date.now());
@@ -171,40 +172,40 @@ function update() {
         let minutesWords = t.m.split(" ");
         let hs = t.h + " " + t.sep;
         if (hs.length <= DISPLAYS) {
-            textToSegments(hs, displayMap[0]);
-            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[1]);
-            textToSegments(minutesWords.slice(2).join(" "), displayMap[2]);
+            textToSegments(hs, displayMap[0], centered);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[1], centered);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[2], centered);
         } else if ((t.sep + " " + minutesWords[0]).length <= DISPLAYS) {
-            textToSegments(t.h, displayMap[0]);
-            textToSegments(t.sep + " " + minutesWords[0], displayMap[1]);
-            textToSegments(minutesWords.slice(1).join(" "), displayMap[2]);
+            textToSegments(t.h, displayMap[0], centered);
+            textToSegments(t.sep + " " + minutesWords[0], displayMap[1], centered);
+            textToSegments(minutesWords.slice(1).join(" "), displayMap[2], centered);
         } else {
-            textToSegments(t.h, displayMap[0]);
-            textToSegments(t.sep, displayMap[1]);
-            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[2]);
-            textToSegments(minutesWords.slice(2).join(" "), displayMap[3]);
+            textToSegments(t.h, displayMap[0], centered);
+            textToSegments(t.sep, displayMap[1], centered);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[2], centered);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[3], centered);
         }
     } else if (t.sep == "") { // ЧАСА
-        if ((t.h + " " + t.m).length <= DISPLAYS) textToSegments(t.h + " " + t.m, displayMap[0]);
+        if ((t.h + " " + t.m).length <= DISPLAYS) textToSegments(t.h + " " + t.m, displayMap[0], centered);
         else {
-            textToSegments(t.h, displayMap[0]);
-            textToSegments(t.m, displayMap[1]);
+            textToSegments(t.h, displayMap[0], centered);
+            textToSegments(t.m, displayMap[1], centered);
         }
     } else if (t.string.length <= DISPLAYS) {
-        textToSegments(t.string, displayMap[0]);
+        textToSegments(t.string, displayMap[0], centered);
     } else {
         let hs = t.h + " " + t.sep;
         let sm = t.sep + " " + t.m;
         if (hs.length > DISPLAYS && sm.length > DISPLAYS) {
-            textToSegments(t.h, displayMap[0]);
-            textToSegments(t.sep, displayMap[1]);
-            textToSegments(t.m, displayMap[2]);
+            textToSegments(t.h, displayMap[0], centered);
+            textToSegments(t.sep, displayMap[1], centered);
+            textToSegments(t.m, displayMap[2], centered);
         } else if (hs.length > DISPLAYS) {
-            textToSegments(t.h, displayMap[0]);
-            textToSegments(sm, displayMap[1]);
+            textToSegments(t.h, displayMap[0], centered);
+            textToSegments(sm, displayMap[1], centered);
         } else {
-            textToSegments(hs, displayMap[0]);
-            textToSegments(t.m, displayMap[1]);
+            textToSegments(hs, displayMap[0], centered);
+            textToSegments(t.m, displayMap[1], centered);
         }
     }
     setTimeout(saveImage, 1000);
