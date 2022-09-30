@@ -200,6 +200,7 @@ function letterToSegments(letter, display) {
 
 function textToSegments(string, displayArray, centered) {
     if (displayArray.length < string.length) return console.error("String too long for display array");
+    if (typeof centered == "string") centered = string.length % 2 == displayArray.length % 2;
     if (centered) {
         if (string.length == displayArray.length) textToSegments(string, displayArray, false);
         else {

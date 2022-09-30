@@ -1,5 +1,5 @@
 const w = canvas.width, h = canvas.height;
-const DISPLAYS = 10, STDLENGTH = 48.5, STDTHICKNESS = STDLENGTH / 5, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
+const DISPLAYS = 10, ROWS = 5, STDLENGTH = 48.5, STDTHICKNESS = STDLENGTH / 5, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
 
 function rotatePoint(pointX, pointY, originX, originY, angle) {
     return {
@@ -153,7 +153,7 @@ class Display {
 
 let displayMap = [];
 let DISPLAYSIZE = STDLENGTH * 2 + STDTHICKNESS * 3;
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < ROWS; i++) {
     displayMap[i] = [];
     for (let j = 0; j < DISPLAYS; j++) {
         displayMap[i].push(new Display(STDTHICKNESS * 2 + j * (STDLENGTH * 2 + STDTHICKNESS * 4), STDTHICKNESS * (i+2) + DISPLAYSIZE * i));
@@ -161,7 +161,7 @@ for (let i = 0; i < 5; i++) {
 }
 
 let t = {h: "НАЧАЛНА", sep: "Ш**АНА", m: "СТОЙНОСТ"};
-let centered = true;
+let centered = "conditional";
 
 function update() {
     let date = new Date(Date.now());
@@ -172,40 +172,50 @@ function update() {
         let minutesWords = t.m.split(" ");
         let hs = t.h + " " + t.sep;
         if (hs.length <= DISPLAYS) {
-            textToSegments(hs, displayMap[0], centered);
-            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[1], centered);
-            textToSegments(minutesWords.slice(2).join(" "), displayMap[2], centered);
+            let height = 3, s = Math.floor((ROWS - height) / 2);
+            textToSegments(hs, displayMap[s], centered);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[s+1], centered);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[s+2], centered);
         } else if ((t.sep + " " + minutesWords[0]).length <= DISPLAYS) {
-            textToSegments(t.h, displayMap[0], centered);
-            textToSegments(t.sep + " " + minutesWords[0], displayMap[1], centered);
-            textToSegments(minutesWords.slice(1).join(" "), displayMap[2], centered);
+            let height = 3, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.sep + " " + minutesWords[0], displayMap[s+1], centered);
+            textToSegments(minutesWords.slice(1).join(" "), displayMap[s+2], centered);
         } else {
-            textToSegments(t.h, displayMap[0], centered);
-            textToSegments(t.sep, displayMap[1], centered);
-            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[2], centered);
-            textToSegments(minutesWords.slice(2).join(" "), displayMap[3], centered);
+            let height = 4, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.sep, displayMap[s+1], centered);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[s+2], centered);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[s+3], centered);
         }
     } else if (t.sep == "") { // ЧАСА
-        if ((t.h + " " + t.m).length <= DISPLAYS) textToSegments(t.h + " " + t.m, displayMap[0], centered);
-        else {
-            textToSegments(t.h, displayMap[0], centered);
-            textToSegments(t.m, displayMap[1], centered);
+        if ((t.h + " " + t.m).length <= DISPLAYS) {
+            let height = 1, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h + " " + t.m, displayMap[s], centered);
+        } else {
+            let height = 2, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.m, displayMap[s+1], centered);
         }
     } else if (t.string.length <= DISPLAYS) {
-        textToSegments(t.string, displayMap[0], centered);
+        let height = 1, s = Math.floor((ROWS - height) / 2);
+        textToSegments(t.string, displayMap[s], centered);
     } else {
         let hs = t.h + " " + t.sep;
         let sm = t.sep + " " + t.m;
         if (hs.length > DISPLAYS && sm.length > DISPLAYS) {
-            textToSegments(t.h, displayMap[0], centered);
-            textToSegments(t.sep, displayMap[1], centered);
-            textToSegments(t.m, displayMap[2], centered);
+            let height = 3, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.sep, displayMap[s+1], centered);
+            textToSegments(t.m, displayMap[s+2], centered);
         } else if (hs.length > DISPLAYS) {
-            textToSegments(t.h, displayMap[0], centered);
-            textToSegments(sm, displayMap[1], centered);
+            let height = 2, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(sm, displayMap[s+1], centered);
         } else {
-            textToSegments(hs, displayMap[0], centered);
-            textToSegments(t.m, displayMap[1], centered);
+            let height = 2, s = Math.floor((ROWS - height) / 2);
+            textToSegments(hs, displayMap[s], centered);
+            textToSegments(t.m, displayMap[s+1], centered);
         }
     }
     setTimeout(saveImage, 1000);
