@@ -27,4 +27,4 @@ Step 2: `cd segment-thing`
 
 Step 3: `npm install`
 
-Step 4: `node .`
+Step 4: `./start.sh`
