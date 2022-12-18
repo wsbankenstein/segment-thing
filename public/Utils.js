@@ -18,8 +18,8 @@ let mouseY = 0;
 
 function isKeyPressed(key) { return keyStates.get(key); }
 
-window.addEventListener('keydown', ev => {keyDown(ev); keyStates.set(ev.key, true)});
-window.addEventListener('keyup', ev => {keyUp(ev); keyStates.set(ev.key, false)});
+// window.addEventListener('keydown', ev => {keyDown(ev); keyStates.set(ev.key, true)});
+// window.addEventListener('keyup', ev => {keyUp(ev); keyStates.set(ev.key, false)});
 window.addEventListener('mousedown', ev => mouseDown(ev));
 window.addEventListener('mouseup', ev => mouseUp(ev));
 window.addEventListener('mousemove', ev => {mouseX = ev.x; mouseY = ev.y;});

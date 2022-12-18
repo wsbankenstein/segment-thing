@@ -12,7 +12,25 @@
     <body>
         <canvas id="canvas-id"></canvas>
         <script src="Utils.js"></script>
+        <script src="segment.js"></script>
         <script src="game.js"></script>
-        <script src="clockUtils.js"></script>
     </body>
+    <script>
+        /*
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "clock/now");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = () => {
+            console.log(xhr);
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(JSON.parse(xhr.responseText));
+                let imageData = new ImageData(JSON.parse(xhr.responseText), 1600, 900);
+                document.getElementById("canvas-id").getContext('2d').putImageData(imageData, 0, 0);
+            }
+        }
+        let d = new Date(Date.now());
+        let data = {h: d.getHours(), m: d.getMinutes()};
+        xhr.send(JSON.stringify(data));
+        */
+    </script>
 </html>
