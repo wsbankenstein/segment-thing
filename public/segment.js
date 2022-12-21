@@ -138,103 +138,209 @@ class Display {
 
 function letterToSegments(letter, display) {
     let s = display.segments;
-    // s.map(a => a.set(false));
+    s.map(a => a.set(false));
+    let a = [];
     switch(letter) {
-        case "А":
-            for(let i of [0, 1, 2, 3, 6, 9, 8, 11]) s[i].set(true);
+        case "А": // cyrillic
+        case "A": // latin
+            a = [0, 1, 2, 3, 6, 9, 8, 11];
             break;
         case "Б":
-            for(let i of [0, 1, 6, 9, 2, 3, 11, 4, 5]) s[i].set(true);
+            a = [0, 1, 6, 9, 2, 3, 11, 4, 5];
             break;
         case "В":
-            for(let i of [0, 6, 9, 7, 4, 5, 11, 2, 3]) s[i].set(true);
+        case "B":
+            a = [0, 6, 9, 7, 4, 5, 11, 2, 3];
             break;
         case "Г":
-            for(let i of [0, 1, 6, 9]) s[i].set(true);
+            a = [0, 1, 6, 9];
             break;
         case "Д":
-            for(let i of [0, 1, 6, 9, 4, 15, 8]) s[i].set(true);
+        case "D":
+            a = [0, 1, 6, 9, 4, 15, 8];
             break;
         case "Е":
-            for(let i of [0, 1, 2, 4, 5, 6, 9]) s[i].set(true);
+        case "E":
+            a = [0, 1, 2, 4, 5, 6, 9];
             break;
         case "Ж":
-            for(let i of [6, 9, 7, 10, 8, 11, 2, 3]) s[i].set(true);
+            a = [6, 9, 7, 10, 8, 11, 2, 3];
             break;
         case "З":
-            for(let i of [0, 1, 8, 3, 2, 11, 5, 4]) s[i].set(true);
+            a = [0, 1, 8, 3, 2, 11, 5, 4];
             break;
         case "И":
-            for(let i of [6, 9, 14, 13, 8, 11]) s[i].set(true);
+            a = [6, 9, 14, 13, 8, 11];
             break;
         case "Й":
-            for(let i of [10, 15, 11, 1]) s[i].set(true);
+            a = [10, 15, 11, 1];
             break;
         case "К":
-            for(let i of [6, 9, 2, 13, 3, 11]) s[i].set(true);
+        case "K":
+            a = [6, 9, 2, 13, 3, 11];
             break;
         case "Л":
-            for(let i of [14, 13, 8, 11]) s[i].set(true);
+            a = [14, 13, 8, 11];
             break;
         case "М":
-            for(let i of [7, 8, 9, 11, 12, 13]) s[i].set(true);
+            a = [7, 8, 9, 11, 12, 13];
             break;
         case "Н":
-            for(let i of [6, 9, 2, 3, 8, 11]) s[i].set(true);
+        case "H":
+            a = [6, 9, 2, 3, 8, 11];
             break;
         case "О":
-            for(let i of [0, 1, 6, 9, 4, 5, 8, 11]) s[i].set(true);
+        case "O":
+            a = [0, 1, 6, 9, 4, 5, 8, 11];
             break;
         case "П":
-            for(let i of [6, 9, 0, 1, 8, 11]) s[i].set(true);
+            a = [6, 9, 0, 1, 8, 11];
             break;
         case "Р":
-            for(let i of [6, 9, 0, 1, 8, 3, 2]) s[i].set(true);
+        case "P":
+            a = [6, 9, 0, 1, 8, 3, 2];
             break;
         case "С":
-            for(let i of [0, 1, 6, 9, 4, 5]) s[i].set(true);
+        case "C":
+            a = [0, 1, 6, 9, 4, 5];
             break;
         case "Т":
-            for(let i of [0, 1, 7, 10]) s[i].set(true);
+        case "T":
+            a = [0, 1, 7, 10];
             break;
         case "У":
-            for(let i of [6, 2, 3, 8, 11, 5, 4]) s[i].set(true);
+        case "Y":
+            a = [6, 2, 3, 8, 11, 5, 4];
             break;
         case "Ф":
-            for(let i of [13, 12, 14, 15, 7, 2, 3, 10]) s[i].set(true);
+            a = [13, 12, 14, 15, 7, 2, 3, 10];
             break;
         case "Х":
-            for(let i of [7, 10, 14, 13]) s[i].set(true);
+        case "X":
+            a = [7, 10, 14, 13];
             break;
         case "Ц":
-            for(let i of [6, 7, 2, 3, 11]) s[i].set(true);
+            a = [6, 7, 2, 3, 11];
             break;
         case "Ч":
-            for(let i of [6, 2, 3, 8, 11]) s[i].set(true);
+            a = [6, 2, 3, 8, 11];
             break;
         case "Ш":
-            for(let i of [6, 9, 4, 5, 7, 10, 8, 11]) s[i].set(true);
+            a = [6, 9, 4, 5, 7, 10, 8, 11];
             break;
         case "Щ":
-            for(let i of [6, 7, 8, 2, 3, 11]) s[i].set(true);
+            a = [6, 7, 8, 2, 3, 11];
             break;
         case "Ъ":
-            for(let i of [0, 7, 10, 5, 11]) s[i].set(true);
+            a = [0, 7, 10, 5, 11];
             break;
         // не ми пука за ь
+        // UPDATE (21/XII/22): вече ми пука за ь!
+        case "Ь":
+            a = [3, 5, 7, 10, 11];
         case "Ю":
-            for(let i of [6, 9, 2, 3, 7, 10, 1, 8, 11, 5]) s[i].set(true);
+            a = [6, 9, 2, 3, 7, 10, 1, 8, 11, 5];
             break;
         case "Я":
-            for(let i of [7, 1, 8, 11, 3, 14, 10]) s[i].set(true);
+            a = [7, 1, 8, 11, 3, 14, 10];
             break;
         case " ":
             case "":
             break;
         case "-":
-            for(let i of [2, 3]) s[i].set(true);
+            a = [2, 3];
+            break;
+        case "+":
+            a = [2, 3, 7, 10];
+            break;
+        case "/":
+            a = [13, 14];
+            break;
+        case "_":
+            a = [4, 5];
+            break;
+        case "⁰":
+        case "°":
+            a = [0, 2, 6, 7];
+            break;
+        case "1":
+            a = [4, 5, 7, 10, 12];
+            break;
+        case "2":
+            a = [0, 1, 2, 3, 4, 5, 8, 9];
+            break;
+        case "3":
+            a = [0, 1, 3, 4, 5, 8, 11];
+            break;
+        case "4":
+            a = [2, 3, 6, 8, 11];
+            break;
+        case "5":
+            a = [0, 1, 2, 3, 4, 5, 6, 11];
+            break;
+        case "6":
+            a = [0, 1, 2, 3, 4, 5, 6, 9, 11];
+            break;
+        case "7":
+            a = [0, 1, 10, 13];
+            break;
+        case "8":
+            a = [0, 1, 2, 3, 4, 5, 6, 8, 9, 11];
+            break;
+        case "9":
+            a = [0, 1, 2, 3, 4, 5, 6, 8, 11];
+            break;
+        case "0":
+            a = [0, 1, 4, 5, 6, 8, 9, 11];
+            break;
+        case "F":
+            a = [0, 1, 2, 6, 9];
+            break;
+        case "G":
+            a = [0, 1, 3, 4, 6, 9, 15];
+            break;
+        case "I":
+            a = [0, 1, 4, 5, 7, 10];
+            break;
+        case "J":
+            a = [0, 1, 4, 7, 9, 10];
+            break;
+        case "L":
+            a = [4, 5, 6, 9];
+            break;
+        case "M":
+            a = [0, 1, 6, 7, 8, 9, 10, 11];
+            break;
+        case "N":
+            a = [0, 1, 6, 8, 9, 11];
+            break;
+        case "Q":
+            a = [0, 1, 4, 5, 6, 8, 9, 15];
+            break;
+        case "R":
+            a = [0, 1, 2, 3, 6, 9, 11, 13];
+            break;
+        case "S":
+            a = [0, 1, 2, 3, 4, 5, 6, 11];
+            break;
+        case "U":
+            a = [4, 5, 6, 8, 9, 11];
+            break;
+        case "V":
+            a = [6, 9, 13, 14];
+            break;
+        case "W":
+            a = [4, 5, 6, 8, 9, 10, 11];
+            break;
+        case "Z":
+            a = [0, 1, 4, 5, 13, 14];
+            break;
+        default:
+            a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+            console.error("Unsupported character in string");
             break;
     }
+    for (let i of a) s[i].set(true);
 }
 
 function textToSegments(string, displayArray, centered) {
