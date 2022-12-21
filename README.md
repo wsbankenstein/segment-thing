@@ -27,10 +27,10 @@ Step 2: `cd segment-thing`
 
 Step 3: `npm install`
 
-Step 4: `node server.js`
+Step 4: Edit `wallpaper.sh` to use your favourite wallpaper setter and port and tune the speed to your liking
 
-Step 4: `curl http://localhost:6969/clock --output clock.png` (replace 6969 if you modified the port)
+Step 5: `./wallpaper.sh`
 
-Step 5: set `clock.png` (or whatever you decided to call the file) as your wallpaper using your favourite wallpaper setter
+You could also consider running `wallpaper.sh` at startup.
 
-I might make another shell script for starting the thing, if I can be arsed to do so. 
+### защо по дяволите написа тая документация на английски бе нещастник. шибаното нещо е на български. дейба защо няма локализации на езиците за програмиране защо трябва да знаеш английски за да живееш пълноценно в модерното общество защо английски защо който и да било конкретен език защо прекрасният исландски език умира заради производителите на телефони. светът е гаден. сегментите са по-яки.
