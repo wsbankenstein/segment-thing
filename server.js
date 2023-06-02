@@ -25,6 +25,7 @@ function renderClock(hours = new Date(Date.now()).getHours(), minutes = new Date
 
     const canvas = createCanvas(w, h);
     const ctx = canvas.getContext('2d');
+    ctx.globalCompositeOperation = "lighter";
 
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, w, h);

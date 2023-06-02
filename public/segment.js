@@ -105,10 +105,10 @@ class Display {
             new Segment(x + segmentLength + segmentThickness / 2, y + segmentLength + segmentThickness * 1.5, Math.PI * 0.5, segmentLength),
             new Segment(x + segmentLength * 2 + segmentThickness * 1.5, y + segmentLength + segmentThickness * 1.5, Math.PI * 0.5, segmentLength),
 
-            new Segment(x + segmentThickness / 3, y + segmentLength + segmentThickness / 6, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness + 1),
-            new Segment(x + segmentLength + segmentThickness * 4 / 3, y + segmentLength + segmentThickness / 6, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness + 1),
-            new Segment(x + segmentThickness / 3, y + segmentLength * 2 + segmentThickness * 7 / 6, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness + 1),
-            new Segment(x + segmentLength + segmentThickness * 4 / 3, y + segmentLength * 2 + segmentThickness * 7 / 6, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness + 1),
+            new Segment(x + segmentThickness / 4 + 2, y + segmentLength + segmentThickness / 6 - 1, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness - 2),
+            new Segment(x + segmentLength + segmentThickness * 4 / 3 + 1, y + segmentLength + segmentThickness / 6 - 1, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness - 2),
+            new Segment(x + segmentThickness / 3 + 1, y + segmentLength * 2 + segmentThickness * 7 / 6 - 1, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness - 2),
+            new Segment(x + segmentLength + segmentThickness * 4 / 3 + 1, y + segmentLength * 2 + segmentThickness * 7 / 6 - 1, Math.PI * 1.75, segmentLength * Math.sqrt(2) - segmentThickness - 2),
 
             // Without gaps
             // new Segment(x, y, 0, segmentLength),
