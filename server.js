@@ -20,12 +20,12 @@ app.get('/', (req, res) => {
 });
 
 function renderClock(hours = new Date(Date.now()).getHours(), minutes = new Date(Date.now()).getMinutes(), returnAs = 'raw') {
-    const w = 15360, h = 8640;
+    const w = 3840, h = 2160;
     const DISPLAYS = 11, ROWS = 6, STDLENGTH = w / (DISPLAYS * 2.8), STDTHICKNESS = STDLENGTH / 5, STDONCOLOUR = '#FF0000', STDOFFCOLOUR = '#151515';
 
     const canvas = createCanvas(w, h);
     const ctx = canvas.getContext('2d');
-    ctx.globalCompositeOperation = "lighter";
+    ctx.globalCompositeOperation = "lighten";
 
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, w, h);
@@ -41,61 +41,58 @@ function renderClock(hours = new Date(Date.now()).getHours(), minutes = new Date
 
     let centered = "conditional";
 
-//    let t = timeToWords(hours, minutes);
-//    displayMap.map(ds => ds.map(d => d.segments.map(s => s.set(false)))); // please never do this again
-//    if (t.m.split(" ").length > 1) { // ДВАДЕСЕТ И ПЕТ
-//        let minutesWords = t.m.split(" ");
-//        let hs = t.h + " " + t.sep;
-//        if (hs.length <= DISPLAYS) {
-//            let height = 3, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(hs, displayMap[s], centered);
-//            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[s+1], centered);
-//            textToSegments(minutesWords.slice(2).join(" "), displayMap[s+2], centered);
-//        } else if ((t.sep + " " + minutesWords[0]).length <= DISPLAYS) {
-//            let height = 3, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(t.h, displayMap[s], centered);
-//            textToSegments(t.sep + " " + minutesWords[0], displayMap[s+1], centered);
-//            textToSegments(minutesWords.slice(1).join(" "), displayMap[s+2], centered);
-//        } else {
-//            let height = 4, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(t.h, displayMap[s], centered);
-//            textToSegments(t.sep, displayMap[s+1], centered);
-//            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[s+2], centered);
-//            textToSegments(minutesWords.slice(2).join(" "), displayMap[s+3], centered);
-//        }
-//    } else if (t.sep == "") { // ЧАСА
-//        if ((t.h + " " + t.m).length <= DISPLAYS) {
-//            let height = 1, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(t.h + " " + t.m, displayMap[s], centered);
-//        } else {
-//            let height = 2, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(t.h, displayMap[s], centered);
-//            textToSegments(t.m, displayMap[s+1], centered);
-//        }
-//    } else if (t.string.length <= DISPLAYS) {
-//        let height = 1, s = Math.floor((ROWS - height) / 2);
-//        textToSegments(t.string, displayMap[s], centered);
-//    } else {
-//        let hs = t.h + " " + t.sep;
-//        let sm = t.sep + " " + t.m;
-//        if (hs.length > DISPLAYS && sm.length > DISPLAYS) {
-//            let height = 3, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(t.h, displayMap[s], centered);
-//            textToSegments(t.sep, displayMap[s+1], centered);
-//            textToSegments(t.m, displayMap[s+2], centered);
-//        } else if (hs.length > DISPLAYS) {
-//            let height = 2, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(t.h, displayMap[s], centered);
-//            textToSegments(sm, displayMap[s+1], centered);
-//        } else {
-//            let height = 2, s = Math.floor((ROWS - height) / 2);
-//            textToSegments(hs, displayMap[s], centered);
-//            textToSegments(t.m, displayMap[s+1], centered);
-//        }
-//    }
-
-    textToSegments(" WILHELM S ", displayMap[2]);
-    textToSegments("BANKENSTEIN", displayMap[3]);
+    let t = timeToWords(hours, minutes);
+    displayMap.map(ds => ds.map(d => d.segments.map(s => s.set(false)))); // please never do this again
+    if (t.m.split(" ").length > 1) { // ДВАДЕСЕТ И ПЕТ
+        let minutesWords = t.m.split(" ");
+        let hs = t.h + " " + t.sep;
+        if (hs.length <= DISPLAYS) {
+            let height = 3, s = Math.floor((ROWS - height) / 2);
+            textToSegments(hs, displayMap[s], centered);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[s+1], centered);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[s+2], centered);
+        } else if ((t.sep + " " + minutesWords[0]).length <= DISPLAYS) {
+            let height = 3, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.sep + " " + minutesWords[0], displayMap[s+1], centered);
+            textToSegments(minutesWords.slice(1).join(" "), displayMap[s+2], centered);
+        } else {
+            let height = 4, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.sep, displayMap[s+1], centered);
+            textToSegments(minutesWords.slice(0, 2).join(" "), displayMap[s+2], centered);
+            textToSegments(minutesWords.slice(2).join(" "), displayMap[s+3], centered);
+        }
+    } else if (t.sep == "") { // ЧАСА
+        if ((t.h + " " + t.m).length <= DISPLAYS) {
+            let height = 1, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h + " " + t.m, displayMap[s], centered);
+        } else {
+            let height = 2, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.m, displayMap[s+1], centered);
+        }
+    } else if (t.string.length <= DISPLAYS) {
+        let height = 1, s = Math.floor((ROWS - height) / 2);
+        textToSegments(t.string, displayMap[s], centered);
+    } else {
+        let hs = t.h + " " + t.sep;
+        let sm = t.sep + " " + t.m;
+        if (hs.length > DISPLAYS && sm.length > DISPLAYS) {
+            let height = 3, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(t.sep, displayMap[s+1], centered);
+            textToSegments(t.m, displayMap[s+2], centered);
+        } else if (hs.length > DISPLAYS) {
+            let height = 2, s = Math.floor((ROWS - height) / 2);
+            textToSegments(t.h, displayMap[s], centered);
+            textToSegments(sm, displayMap[s+1], centered);
+        } else {
+            let height = 2, s = Math.floor((ROWS - height) / 2);
+            textToSegments(hs, displayMap[s], centered);
+            textToSegments(t.m, displayMap[s+1], centered);
+        }
+    }
 
     displayMap.map(displays => displays.map(d => d.draw(ctx)));
 
