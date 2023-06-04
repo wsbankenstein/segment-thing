@@ -246,6 +246,9 @@ function letterToSegments(letter, display) {
             break;
         case " ":
             case "":
+            case "\n":
+            case "\0":
+            case "\t":
             break;
         case "-":
             a = [2, 3];

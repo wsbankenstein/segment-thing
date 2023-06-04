@@ -42,6 +42,7 @@ function renderClock(hours = new Date(Date.now()).getHours(), minutes = new Date
     let centered = "conditional";
 
     let t = timeToWords(hours, minutes);
+    console.log(t);
     displayMap.map(ds => ds.map(d => d.segments.map(s => s.set(false)))); // please never do this again
     if (t.m.split(" ").length > 1) { // ДВАДЕСЕТ И ПЕТ
         let minutesWords = t.m.split(" ");
